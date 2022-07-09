@@ -1,57 +1,54 @@
 import React from "react";
 import "../../styles/home.css";
+import { useContext, createContext, useState } from "react";
+import { Context } from "../store/appContext";
+import { AiOutlineClose } from "react-icons/ai";
 
-export const Home = () => (
-	<div className="text-center mt-5">
-	</div>
-);
+export const Home = () => {
+  const { store, actions } = useContext(Context);
+  console.log("store", store);
+  const [todoList, setTodoList] = useState(store.list);
+  console.log("todoList", todoList);
+  const [texto, setTexto] = useState("");
 
-const listItems = props.taskList.map((item, index) => {
-		return (
-		  <li key={index} 
-		  className="d-flex flex-row justify-spacing-between"
-		  onClick={e => deleteTask(e)}
-		  >
-			{item}
-			<span
-			  type="button"
-			  className="delete-button"
-			>
-			  <i className="fas fa-times"></i>
-			</span>
-		  </li>
-		);
-		});
+  function addTodo(input) {
+    const newList = (actions.addTask(input)) 
+    setTodoList(newList);
+  }
+  console.log("todoList5555####", todoList)
+  const listItems = todoList.map((item, index) => {
+    return (
+      <li
+        key={index}
+        className="d-flex flex-row justify-spacing-between"
+        onClick={(e) => deleteTask(e)}
+      >
+        {item}
+        <p className="deletebutton">
+          <AiOutlineClose
+            onClick={(e) => removeTodo(e)}
+            className="icon"
+          />
+        </p>
+      </li>
+    );
+  });
 
-return (
+  return (
     <div className="app">
       <div className="container">
-        <h1></h1>
+        <h1>TO DO</h1>
 
-        <form onSubmit={handleSubmit}>
+        
           <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
+            name="todo"
+            onChange={e => setTexto(e.target.value)}
+            value={texto}
+            onKeyDown={addTodo}
             placeholder="No task, add a task"
-            onFocus={(e) => (e.target.placeholder = "")}
-            type=""
           />
-        </form>
-        <ul className="todotext">
-          {todo.map((task, index) => {
-            return (
-              <li className="theList" key={index}>
-                <p className="taskwords">
-                  {task.text} </p>
-                  <p className="deletebutton"><AiOutlineClose
-                    onClick={() => deleteTodo(task.id)}
-                    className="icon"
-                  />
-                </p>
-              </li>
-            );
-          })}
-        </ul>
+          {listItems}
       </div>
-  </div>
-)
+    </div>
+  );
+};

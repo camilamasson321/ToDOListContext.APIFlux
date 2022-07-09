@@ -1,0 +1,36 @@
+.container {
+    text-align: center;
+    margin:auto;
+    align-items: center;
+  }
+  
+  .app form input {
+    border: 2px solid #eee;
+    align-items: center;
+    font-size: 18px;
+    line-height: 30px;
+    outline: 0;
+    border-radius: 8;
+    width: 500px;
+  }
+  .todotext .theList { 
+    border: 2px solid #eee;
+    margin: auto;
+    font-size: 18px;
+    line-height: 30px;
+    outline: 0;
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
+    width: 500px;
+    list-style: none;
+  }
+  .taskwords{
+      margin-left: 10px;
+  }
+  .deletebutton{
+      margin-right: 10px;
+  }
+  ul {
+      padding-left: 0;
+  }
