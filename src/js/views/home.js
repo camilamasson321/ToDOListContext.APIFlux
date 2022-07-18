@@ -9,21 +9,21 @@ export const Home = () => {
   console.log("store", store);
   const [todoList, setTodoList] = useState(store.list);
   console.log("todoList", todoList);
-  const [texto, setTexto] = useState("");
+  // const [texto, setTexto] = useState("");
 
   function addTodo(input) {
     const newList = actions.addTask(input);
     setTodoList(newList);
   }
-  function removeTodo(input) {
+  function removeTodoFromList(input) {
     // console.log("handleDeleteTask task",task)
-
+    const todoDeleted = actions.removeTodo(input);
     //we use the actions from flux.js
-    setTodoList(actions.removeTodo(input));
+    setTodoList(todoDeleted);
   }
   return (
     <Context.Provider
-      value={{ todoList, texto, addTodo, setTodoList, setTexto }}
+      value={{ todoList, removeTodoFromList, addTodo, setTodoList }}
     >
       <ToDos />
     </Context.Provider>
@@ -48,7 +48,7 @@ const ToDos = () => {
 
   function deleteTask(e) {
     console.log("e from delete", e.target.outerText);
-    removeTodo(e.target.outerText);
+    removeTodoFromList(e.target.outerText);
   }
 
   // console.log("todoList5555####", todoList);
@@ -61,7 +61,7 @@ const ToDos = () => {
       >
         {item}
         <p className="deletebutton">
-          <AiOutlineClose onClick={(e) => removeTodo(e)} className="icon" />
+          <AiOutlineClose onClick={(e) => todoDeleted(e)} className="icon" />
         </p>
       </li>
     );
