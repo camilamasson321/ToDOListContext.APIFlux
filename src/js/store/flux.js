@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      list: ["A", "B"],
+      list: [ "A", "b"],
     },
 
     actions: {

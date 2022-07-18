@@ -12,11 +12,47 @@ export const Home = () => {
   const [texto, setTexto] = useState("");
 
   function addTodo(input) {
-    const newList = (actions.addTask(input)) 
+    const newList = actions.addTask(input);
     setTodoList(newList);
   }
-  console.log("todoList5555####", todoList)
-  const listItems = todoList.map((item, index) => {
+  function removeTodo(input) {
+    // console.log("handleDeleteTask task",task)
+
+    //we use the actions from flux.js
+    setTodoList(actions.removeTodo(input));
+  }
+  return (
+    <Context.Provider
+      value={{ todoList, texto, addTodo, setTodoList, setTexto }}
+    >
+      <ToDos />
+    </Context.Provider>
+  );
+};
+
+const ToDos = () => {
+  const props = useContext(Context);
+  console.log("Coming from Context.Provider: ", props); // In this line we are printing in the console the values received from the Context.Provider
+  const [inputValue, setInputValue] = useState(""); //the string we write gets store in this variable
+
+  const handleChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const passNewTask = (e) => {
+    if (e.key === "Enter") {
+      props.addTodo(inputValue);
+      setInputValue("");
+    }
+  };
+
+  function deleteTask(e) {
+    console.log("e from delete", e.target.outerText);
+    removeTodo(e.target.outerText);
+  }
+
+  // console.log("todoList5555####", todoList);
+  const listItems = props.todoList.map((item, index) => {
     return (
       <li
         key={index}
@@ -25,10 +61,7 @@ export const Home = () => {
       >
         {item}
         <p className="deletebutton">
-          <AiOutlineClose
-            onClick={(e) => removeTodo(e)}
-            className="icon"
-          />
+          <AiOutlineClose onClick={(e) => removeTodo(e)} className="icon" />
         </p>
       </li>
     );
@@ -39,15 +72,14 @@ export const Home = () => {
       <div className="container">
         <h1>TO DO</h1>
 
-        
-          <input
-            name="todo"
-            onChange={e => setTexto(e.target.value)}
-            value={texto}
-            onKeyDown={addTodo}
-            placeholder="No task, add a task"
-          />
-          {listItems}
+        <input
+          name="todo"
+          onChange={handleChange}
+          value={inputValue}
+          onKeyDown={passNewTask}
+          placeholder="No task, add a task"
+        />
+        <ul>{listItems}</ul>
       </div>
     </div>
   );
