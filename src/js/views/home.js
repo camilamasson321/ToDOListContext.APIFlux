@@ -11,18 +11,13 @@ export const Home = () => {
   console.log("todoList", todoList);
   // const [texto, setTexto] = useState("");
 
-//   const handleNewTask = (taskList) => {
-//     setTaskList(
-//       //we use the actions from flux.js
-//       actions.addTask(0, taskList) 
-//       )
-// };
+
   const addTodo = (todoList) => {
     setTodoList ( actions.addTask(0, todoList))
     };
 
-  function removeTodoFromList(input) {
-    const todoDeleted = actions.removeTodo(input);
+  function removeTodoFromList(todo) {
+    const todoDeleted = actions.removeTodo(todo);
     //we use the actions from flux.js
     setTodoList(todoDeleted);
   }
@@ -66,7 +61,7 @@ const ToDos = () => {
         {item}
         <span className="deletebutton"
         type="button">
-          <AiOutlineClose onClick={(e) => deleteTask(e)} className="icon" />
+          <AiOutlineClose className="icon" />
         </span>
       </li>
     );
