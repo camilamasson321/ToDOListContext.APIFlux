@@ -11,10 +11,16 @@ export const Home = () => {
   console.log("todoList", todoList);
   // const [texto, setTexto] = useState("");
 
-  function addTodo(input) {
-    const newList = actions.addTask(input);
-    setTodoList(newList);
-  }
+//   const handleNewTask = (taskList) => {
+//     setTaskList(
+//       //we use the actions from flux.js
+//       actions.addTask(0, taskList) 
+//       )
+// };
+  const addTodo = (todoList) => {
+    setTodoList ( actions.addTask(0, todoList))
+    };
+
   function removeTodoFromList(input) {
     const todoDeleted = actions.removeTodo(input);
     //we use the actions from flux.js
