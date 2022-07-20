@@ -25,13 +25,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
         const filteredList = store.list.filter(removeTodoAfter);
 
-        // let filteredTodos = [...todo].filter((todo) => todo !== todo);
-        // setTodo(filteredTodos);
-
         store.list = filteredList;
-
-        // print the store.list updated
-        console.log("store.list", store.list);
 
         return filteredList;
       },

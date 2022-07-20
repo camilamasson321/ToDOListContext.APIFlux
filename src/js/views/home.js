@@ -1,7 +1,7 @@
 import React from "react";
 import "../../styles/home.css";
 import { useContext, createContext, useState } from "react";
-import { Context } from "../store/appContext";
+import injectContext, { Context } from "../store/appContext";
 import { AiOutlineClose } from "react-icons/ai";
 
 export const Home = () => {
@@ -9,7 +9,6 @@ export const Home = () => {
   console.log("store", store);
   const [todoList, setTodoList] = useState(store.list);
   console.log("todoList", todoList);
-  // const [texto, setTexto] = useState("");
 
 
   const addTodo = (todoList) => {
@@ -18,7 +17,6 @@ export const Home = () => {
 
   function removeTodoFromList(todo) {
     const todoDeleted = actions.removeTodo(todo);
-    //we use the actions from flux.js
     setTodoList(todoDeleted);
   }
   return (
@@ -46,8 +44,7 @@ const ToDos = () => {
   };
 
   function deleteTask(e) {
-    console.log("e from delete", e.target.outerText);
-    props.removeTodoFromList(e.target.outerText);
+    props.removeTodoFromList(e);
   }
 
   // console.log("todoList5555####", todoList);
@@ -61,7 +58,7 @@ const ToDos = () => {
         {item}
         <span className="deletebutton"
         type="button">
-          <AiOutlineClose className="icon" />
+          <AiOutlineClose  onClick={() => deleteTask(item)} className="icon" />
         </span>
       </li>
     );
@@ -88,3 +85,4 @@ const ToDos = () => {
     </div>
   );
 };
+
