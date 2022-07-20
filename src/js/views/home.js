@@ -16,7 +16,6 @@ export const Home = () => {
     setTodoList(newList);
   }
   function removeTodoFromList(input) {
-    // console.log("handleDeleteTask task",task)
     const todoDeleted = actions.removeTodo(input);
     //we use the actions from flux.js
     setTodoList(todoDeleted);
@@ -32,8 +31,7 @@ export const Home = () => {
 
 const ToDos = () => {
   const props = useContext(Context);
-  console.log("Coming from Context.Provider: ", props); // In this line we are printing in the console the values received from the Context.Provider
-  const [inputValue, setInputValue] = useState(""); //the string we write gets store in this variable
+  const [inputValue, setInputValue] = useState(""); 
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -42,13 +40,13 @@ const ToDos = () => {
   const passNewTask = (e) => {
     if (e.key === "Enter") {
       props.addTodo(inputValue);
-      setInputValue("");
+      setInputValue(" ");
     }
   };
 
   function deleteTask(e) {
     console.log("e from delete", e.target.outerText);
-    removeTodoFromList(e.target.outerText);
+    props.removeTodoFromList(e.target.outerText);
   }
 
   // console.log("todoList5555####", todoList);
@@ -60,18 +58,20 @@ const ToDos = () => {
         onClick={(e) => deleteTask(e)}
       >
         {item}
-        <p className="deletebutton">
-          <AiOutlineClose onClick={(e) => todoDeleted(e)} className="icon" />
-        </p>
+        <span className="deletebutton"
+        type="button">
+          <AiOutlineClose onClick={(e) => deleteTask(e)} className="icon" />
+        </span>
       </li>
     );
   });
 
   return (
     <div className="app">
-      <div className="container">
-        <h1>TO DO</h1>
-
+      <h1>TO DO</h1>
+      <div className="container d-flex flex-column">
+      <div className="todos-container-header d-flex flex-row">
+        
         <input
           name="todo"
           onChange={handleChange}
@@ -79,7 +79,10 @@ const ToDos = () => {
           onKeyDown={passNewTask}
           placeholder="No task, add a task"
         />
-        <ul>{listItems}</ul>
+        </div>
+        <div className="todos-container-body flex-grow-1">
+                  <ul>{listItems}</ul>
+        </div>
       </div>
     </div>
   );
